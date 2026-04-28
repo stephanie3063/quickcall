@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickCall Mobile Mechanic</title>
+
+  <style>
+    :root {
+      --blue: #145BFF;
+      --black: #080A0D;
+      --dark: #10151B;
+      --white: #ffffff;
+      --gray: #f4f6f8;
+      --text: #111111;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: white;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .topbar {
+      width: 100%;
+      background: white;
+      padding: 18px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .logo img {
+      height: 76px;
+      width: auto;
+      display: block;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    nav a {
+      color: #111;
+    }
+
+    .phone-btn {
+      background: var(--blue);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 900;
+      box-shadow: 0 5px 12px rgba(20,91,255,.35);
+    }
+
+    .hero {
+      min-height: 620px;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.94) 0%, rgba(0,0,0,.82) 38%, rgba(0,0,0,.30) 100%),
+        url('https://images.unsplash.com/photo-1632823471565-1ecdf5c98bc3?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 95px 7% 70px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 14px;
+      background: var(--blue);
+      transform: skewY(-2deg);
+      transform-origin: left;
+    }
+
+    .hero-content {
+      max-width: 720px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: .95;
+      text-transform: uppercase;
+      font-weight: 950;
+      letter-spacing: -2px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+      color: var(--blue);
+    }
+
+    .hero p {
+      font-size: 24px;
+      margin-bottom: 30px;
+      max-width: 560px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 18px 38px;
+      border-radius: 10px;
+      font-weight: 900;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: white;
+    }
+
+    .btn-outline {
+      border: 2px solid var(--blue);
+      color: white;
+      background: rgba(0,0,0,.35);
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-top: 20px;
+    }
+
+    .trust-box {
+      max-width: 190px;
+      border-left: 3px solid var(--blue);
+      padding-left: 16px;
+    }
+
+    .trust-box strong {
+      display: block;
+      color: white;
+      font-size: 15px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .trust-box p {
+      font-size: 14px;
+      margin: 0;
+      color: #ddd;
+    }
+
+    .section {
+      padding: 70px 7%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title small {
+      color: var(--blue);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .section-title h2 {
+      font-size: 34px;
+      text-transform: uppercase;
+      font-weight: 950;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 32px 22px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,.12);
+      border: 1px solid #eee;
+    }
+
+    .icon {
+      font-size: 44px;
+      margin-bottom: 14px;
+      color: var(--blue);
+    }
+
+    .card h3 {
+      font-size: 18px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-weight: 950;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: #333;
+    }
+
+    .dark-section {
+      background: linear-gradient(135deg, #05070A, #121B24);
+      color: white;
+      padding: 65px 7%;
+    }
+
+    .why-title {
+      text-align: center;
+      color: var(--blue);
+      font-size: 28px;
+      text-transform: uppercase;
+      font-weight: 950;
+      margin-bottom: 42px;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .why-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      border-right: 1px solid rgba(255,255,255,.18);
+      padding-right: 25px;
+    }
+
+    .why-item:last-child {
+      border-right: none;
+    }
+
+    .why-icon {
+      font-size: 42px;
+      color: var(--blue);
+    }
+
+    .why-item h3 {
+      text-transform: uppercase;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .why-item p {
+      color: #ddd;
+      font-size: 15px;
+    }
+
+    .cta-strip {
+      background: linear-gradient(90deg, #0038B8, #145BFF);
+      color: white;
+      padding: 36px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .cta-strip h2 {
+      font-size: 34px;
+      text-transform: uppercase;
+      font-weight: 950;
+      line-height: 1.1;
+    }
+
+    .cta-strip a {
+      color: white;
+      font-size: 42px;
+      font-weight: 950;
+    }
+
+    .reviews {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .review {
+      background: white;
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,.10);
+      border: 1px solid #eee;
+    }
+
+    .stars {
+      color: #ffb400;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      background: #06090D;
+      color: white;
+      padding: 55px 7% 20px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
+      gap: 40px;
+      margin-bottom: 35px;
+    }
+
+    .footer-logo img {
+      width: 240px;
+      margin-bottom: 12px;
+    }
+
+    footer h4 {
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    footer p, footer a {
+      color: #ddd;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .copyright {
+      border-top: 1px solid rgba(255,255,255,.15);
+      text-align: center;
+      padding-top: 18px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    @media (max-width: 1000px) {
+      nav {
+        display: none;
+      }
+
+      .services {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .why-grid,
+      .reviews,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .why-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,.18);
+        padding-bottom: 20px;
+      }
+
+      .cta-strip a {
+        font-size: 30px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 14px 5%;
+      }
+
+      .logo img {
+        height: 58px;
+      }
+
+      .hero {
+        padding: 70px 5%;
+      }
+
+      .hero p {
+        font-size: 19px;
+      }
+
+      .services {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .cta-strip h2 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="logo">
+      <img src="quickcall-logo.png" alt="QuickCall Mobile Mechanic Logo">
+    </div>
+
+    <nav>
+      <a href="#home">HOME</a>
+      <a href="#services">SERVICES</a>
+      <a href="#about">ABOUT</a>
+      <a href="#reviews">REVIEWS</a>
+      <a href="#contact">CONTACT</a>
+      <a class="phone-btn" href="tel:2145550198">📞 (214) 555-0198</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Back on the road<br>with <span>one quick call.</span></h1>
+
+      <p>Mobile mechanic service that comes to you. Fast. Reliable. Convenient.</p>
+
+      <div class="hero-buttons">
+        <a class="btn btn-blue" href="tel:2145550198">📞 Call Now</a>
+        <a class="btn btn-outline" href="sms:2145550198">💬 Text Now</a>
+      </div>
+
+      <div class="trust-row">
+        <div class="trust-box">
+          <strong>Fast Response</strong>
+          <p>We come to you when you need us.</p>
+        </div>
+
+        <div class="trust-box">
+          <strong>Reliable Service</strong>
+          <p>Honest work you can count on.</p>
+        </div>
+
+        <div class="trust-box">
+          <strong>Satisfaction Guaranteed</strong>
+          <p>Your satisfaction is our priority.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="section-title">
+      <small>Our Services</small>
+      <h2>Mobile Mechanic Solutions</h2>
+      <p><strong>We come to you.</strong></p>
+    </div>
+
+    <div class="services">
+      <div class="card">
+        <div class="icon">🔍</div>
+        <h3>Diagnostics</h3>
+        <p>Accurate diagnostics to find the problem fast and get you back on the road.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🔋</div>
+        <h3>Battery Replacement</h3>
+        <p>Dead battery? We’ll test it and replace it on the spot.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🛞</div>
+        <h3>Brakes</h3>
+        <p>Brake inspections, pad replacement, and full brake service.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h3>Alternators & Starters</h3>
+        <p>Starting issues? We’ll test and replace your alternator or starter.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🔧</div>
+        <h3>General Repairs</h3>
+        <p>From minor fixes to common repairs, we’ve got you covered.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark-section" id="about">
+    <h2 class="why-title">Why Choose QuickCall?</h2>
+
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">⏱️</div>
+        <div>
+          <h3>Fast Response</h3>
+          <p>We get to you quickly.</p>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-icon">📍</div>
+        <div>
+          <h3>We Come To You</h3>
+          <p>Home, work, or wherever you are.</p>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-icon">💲</div>
+        <div>
+          <h3>Honest Pricing</h3>
+          <p>Upfront pricing, no surprises.</p>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-icon">📅</div>
+        <div>
+          <h3>Same-Day Service</h3>
+          <p>Most repairs done on-site the same day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip">
+    <h2>Need your car fixed fast?<br>Call or text now!</h2>
+    <a href="tel:2145550198">📞 (214) 555-0198</a>
+  </section>
+
+  <section class="section" id="reviews">
+    <div class="section-title">
+      <h2>What Our Customers Say</h2>
+    </div>
+
+    <div class="reviews">
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>“Quick, reliable, and professional. He had me back on the road in no time!”</p>
+        <strong>– Jessica M.</strong>
+      </div>
+
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>“Great service! Came to my house, diagnosed the problem, and fixed it fast.”</p>
+        <strong>– Daniel R.</strong>
+      </div>
+
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>“Honest pricing and excellent work. Highly recommend QuickCall!”</p>
+        <strong>– Mark T.</strong>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="footer-grid">
+      <div class="footer-logo">
+        <img src="quickcall-logo.png" alt="QuickCall Mobile Mechanic Logo">
+        <p><strong>Back on the road with one quick call.</strong></p>
+      </div>
+
+      <div>
+        <h4>Quick Links</h4>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div>
+        <h4>Serving Areas</h4>
+        <p>📍 Dallas</p>
+        <p>📍 Royse City</p>
+        <p>📍 Rockwall</p>
+        <p>📍 Mesquite</p>
+        <p>📍 Surrounding Areas</p>
+      </div>
+
+      <div>
+        <h4>Contact Us</h4>
+        <a href="tel:2145550198">📞 (214) 555-0198</a>
+        <a href="sms:2145550198">💬 Text Us Anytime</a>
+        <a href="mailto:quickcallmobilemechanic@gmail.com">✉️ quickcallmobilemechanic@gmail.com</a>
+        <p>🕒 Mon–Sat: 7:00 AM – 7:00 PM</p>
+      </div>
+    </div>
+
+    <div class="copyright">
+      © 2026 QuickCall Mobile Mechanic. All Rights Reserved.
+    </div>
+  </footer>
+
+</body>
+</html>
